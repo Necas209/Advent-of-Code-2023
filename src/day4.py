@@ -29,6 +29,5 @@ def main() -> None:
     print(f"Algorithm took {end - start:.3f}s")
 
 
-
 if __name__ == "__main__":
     main()
