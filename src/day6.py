@@ -30,7 +30,7 @@ def main() -> None:
     total = reduce(operator.mul, map(Race.ways_to_win, races))
     print("Answer (Part 1):", total)
 
-    the_race = Race(int(''.join(times_str)), int(''.join(distances_str)))
+    the_race = Race(int("".join(times_str)), int("".join(distances_str)))
     print("Answer (Part 2):", the_race.ways_to_win())
 
 

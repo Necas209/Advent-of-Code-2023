@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 from typing import NamedTuple
 
+
 class Point(NamedTuple):
     x: int
     y: int
+
 
 @dataclass
 class Char:
@@ -14,6 +16,7 @@ class Char:
     @property
     def is_gear(self) -> bool:
         return self.adjacent == 2
+
 
 @dataclass
 class Number:
@@ -26,22 +29,21 @@ class Number:
         end_x = min(self.index.x + self.length, len(lines[0]) - 1)
         start_y = max(self.index.y - 1, 0)
         end_y = min(self.index.y + 1, len(lines) - 1)
-        for line in lines[start_y:end_y + 1]:
-            # print(self.value, line[start_x:end_x + 1])
-            for char in line[start_x:end_x + 1]:
-                if char.value not in "0123456789.":
-                    if char.value == "*":
-                        char.adjacent += 1
-                        char.ratio *= self.value
-                    return True
+        for line in lines[start_y : end_y + 1]:
+            for char in line[start_x : end_x + 1]:
+                if char.value != "*":
+                    continue
+
+                char.adjacent += 1
+                char.ratio *= self.value
+                return True
         return False
 
 
 def main() -> None:
     with open("input.txt") as f:
         chars = f.readlines()
-    chars = [[Char(char) for char in line.strip()]
-             for line in chars]
+    chars = [[Char(char) for char in line.strip()] for line in chars]
 
     found_num = False
     numbers: list[Number] = []
@@ -66,14 +68,22 @@ def main() -> None:
             numbers.append(number)
 
     assert all(len(str(num.value)) == num.length for num in numbers)
-    assert all(str(num.value)[0] == chars[num.index.y][num.index.x].value for num in numbers)
-    
-    print(*numbers, sep='\n')
+    assert all(
+        str(num.value)[0] == chars[num.index.y][num.index.x].value for num in numbers
+    )
+
+    print(*numbers, sep="\n")
     print(len(numbers))
 
-    print("Sum:", sum(number.value for number in numbers if number.is_part_number(chars)))
+    part_numbers_sum = sum(
+        number.value for number in numbers if number.is_part_number(chars)
+    )
+    print("Sum:", part_numbers_sum)
 
-    print("Gear ratios:", sum(char.ratio for line in chars for char in line if char.is_gear))
+    print(
+        "Gear ratios:",
+        sum(char.ratio for line in chars for char in line if char.is_gear),
+    )
 
 
 if __name__ == "__main__":

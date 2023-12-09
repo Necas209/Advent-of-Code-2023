@@ -4,7 +4,7 @@ import time
 def main() -> None:
     with open("input.txt") as f:
         lines = f.readlines()
-    
+
     lines = [line.split(": ")[1] for line in lines]
 
     points = 0

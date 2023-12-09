@@ -20,15 +20,15 @@ def from_cards(cards: str) -> HandType:
 
     # Special case: J is a Joker, a wilcard that acts like
     # whatever card would make the hand the strongest type possible
-    if counter['J'] not in [0, 5]:
+    if counter["J"] not in [0, 5]:
         most_common_cards = counter.most_common(2)
-        if most_common_cards[0][0] == 'J':
+        if most_common_cards[0][0] == "J":
             most_common_card = most_common_cards[1][0]
         else:
             most_common_card = most_common_cards[0][0]
-        cards = cards.replace('J', most_common_card)
+        cards = cards.replace("J", most_common_card)
         counter = Counter(cards)
-    
+
     card_set = set(cards)
     match len(card_set):
         case 1:
@@ -49,7 +49,7 @@ def from_cards(cards: str) -> HandType:
             return HandType.HIGH_CARD
         case _:
             return HandType.NONE
-        
+
 
 @dataclass
 class Hand:
@@ -69,12 +69,14 @@ def compare_to(val1: int, val2: int) -> int:
     else:
         return 0
 
+
 CARDS_BY_STRENGTH = "AKQT98765432J"[::-1]
+
 
 def compare_hands(hand1: Hand, hand2: Hand) -> int:
     if hand1.hand_type != hand2.hand_type:
         return compare_to(hand1.hand_type.value, hand2.hand_type.value)
-    
+
     for card1, card2 in zip(hand1.cards, hand2.cards):
         if card1 == card2:
             continue
@@ -84,6 +86,7 @@ def compare_hands(hand1: Hand, hand2: Hand) -> int:
         return compare_to(card1_strength, card2_strength)
 
     return 0
+
 
 def main() -> None:
     with open("input.txt") as f:

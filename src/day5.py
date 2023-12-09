@@ -1,22 +1,26 @@
-from typing import NamedTuple
+from dataclasses import dataclass
 
 
-class Map(NamedTuple):
+@dataclass
+class Map:
     dest_start: int
     src_start: int
     length: int
 
+
 def main() -> None:
     with open("input.txt", "r") as f:
-        lines = [line.strip() for line in f.readlines() if line != '\n']
-    
+        lines = [line.strip() for line in f.readlines() if line != "\n"]
+
     seed_pairs = list(map(int, lines[0].split(": ")[1].split()))
-    ranges = [range(start, start + length) for start, length in zip(*[iter(seed_pairs)] * 2)]
+    ranges = [
+        range(start, start + length) for start, length in zip(*[iter(seed_pairs)] * 2)
+    ]
 
     list_of_maps: list[list[Map]] = []
     maps: list[Map] = []
     for line in lines[2:]:
-        if line.endswith(':'):
+        if line.endswith(":"):
             list_of_maps.append(sorted(maps, key=lambda x: x.src_start))
             maps.clear()
             continue
