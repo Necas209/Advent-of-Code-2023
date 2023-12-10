@@ -1,14 +1,14 @@
 """Day 10: Pipe Maze"""
 
-from typing import Protocol
 from shapely import Polygon, Point  # type: ignore
 
 
 Position = tuple[int, int]
 
 
-def find_first_adjacent_pipe(x: int, y: int, lines: list[str]) -> Position:
-    "Find coordinates of the first adjacent pipe"
+def find_first_adjacent_pipe(position: Position, lines: list[str]) -> Position:
+    """Find coordinates of the first adjacent pipe"""
+    x, y = position
     if (x - 1) >= 0 and lines[y][x - 1] in "-LF":
         return x - 1, y
     if (x + 1) < len(lines[0]) and lines[y][x + 1] in "-J7":
@@ -20,17 +20,10 @@ def find_first_adjacent_pipe(x: int, y: int, lines: list[str]) -> Position:
     return x, y
 
 
-class PolygonProtocol(Protocol):
-    def contains(self, other: Point) -> bool:
-        ...
-
-
-def calculate_path(
-    x: int, y: int, lines: list[str]
-) -> tuple[list[Position], PolygonProtocol]:
-    """Calculates the path and its respective bounding polygon"""
-    prev_x, prev_y = x, y
-    curr_x, curr_y = find_first_adjacent_pipe(x, y, lines)
+def calculate_path(start: Position, lines: list[str]) -> list[Position]:
+    """Calculates the loop path"""
+    prev_x, prev_y = start
+    curr_x, curr_y = find_first_adjacent_pipe(start, lines)
     path: list[Position] = []
     while True:
         temp = curr_x, curr_y
@@ -54,10 +47,11 @@ def calculate_path(
                     else:
                         curr_x += 1
         prev_x, prev_y = temp
-    return path, Polygon(path)
+    return path
 
 
 def find_start(lines: list[str]) -> Position:
+    """Find start position"""
     x, y = 0, 0
     for y, line in enumerate(lines):
         if (x := line.find("S")) != -1:
@@ -72,15 +66,16 @@ def main() -> None:
 
     lines = [line.strip() for line in lines]
 
-    x, y = find_start(lines)
-    print(f"Start = ({x}, {y})")
+    start = find_start(lines)
+    print(f"Start = {start}")
 
-    path, polygon = calculate_path(x, y, lines)
+    path = calculate_path(start, lines)
     print("Loop length:", len(path))
     print("Farthest:", len(path) // 2)
 
+    polygon = Polygon(path)
     count = sum(
-        polygon.contains(Point(x, y))
+        polygon.contains(Point(x, y))  # type: ignore
         for y, line in enumerate(lines)
         for x, _ in enumerate(line)
         if (x, y) not in path
