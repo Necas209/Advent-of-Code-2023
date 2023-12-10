@@ -27,10 +27,9 @@ class HandType(Enum):
         # whatever card would make the hand the strongest type possible
         if counter["J"] not in [0, 5]:
             most_common_cards = counter.most_common(2)
-            if most_common_cards[0][0] == "J":
+            most_common_card = most_common_cards[0][0]
+            if most_common_card == "J":
                 most_common_card = most_common_cards[1][0]
-            else:
-                most_common_card = most_common_cards[0][0]
             cards = cards.replace("J", most_common_card)
             counter = Counter(cards)
 

@@ -1,15 +1,15 @@
 """Day 9: Mirage Maintenance"""
-def next_element(history: list[int]) -> int:
-    """Return the next element in the sequence"""
-    diffs_lst = [history]
-    while True:
-        last_diffs = diffs_lst[-1]
-        diffs = [b - a for a, b in zip(last_diffs, last_diffs[1:])]
-        if all(diff == 0 for diff in diffs):
-            break
-        diffs_lst.append(diffs)
 
-    return sum(diffs[-1] for diffs in diffs_lst)
+
+def compute_next_element(sequence: list[int]) -> int:
+    """Return the next element in the sequence"""
+    next_element = 0
+    while True:
+        if all(el == 0 for el in sequence):
+            break
+        next_element += sequence[-1]
+        sequence = [b - a for a, b in zip(sequence, sequence[1:])]
+    return next_element
 
 
 def main() -> None:
@@ -19,14 +19,14 @@ def main() -> None:
 
     histories = [list(map(int, line.split())) for line in lines]
 
-    sum_extrapolated = sum(next_element(history) for history in histories)
-    print("Sum (Part 1):", sum_extrapolated)
+    next_element_sum = sum(map(compute_next_element, histories))
+    print("Sum (Part 1):", next_element_sum)
 
     for history in histories:
         history.reverse()
 
-    sum_extrapolated = sum(next_element(history) for history in histories)
-    print("Sum (Part 2 ):", sum_extrapolated)
+    next_element_sum = sum(map(compute_next_element, histories))
+    print("Sum (Part 2 ):", next_element_sum)
 
 
 if __name__ == "__main__":
