@@ -18,7 +18,7 @@ def main() -> None:
     ]
 
     digits = [
-        re.findall(rf"(\d|{" | ".join(digit_names)})", line, overlapped=True)
+        re.findall(rf"(\d|{' | '.join(digit_names)})", line, overlapped=True)
         for line in lines
     ]
 
