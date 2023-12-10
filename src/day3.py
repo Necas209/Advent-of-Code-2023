@@ -1,3 +1,4 @@
+"""Day 3: Gear Ratios"""
 from dataclasses import dataclass
 from typing import NamedTuple
 

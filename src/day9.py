@@ -1,3 +1,4 @@
+"""Day 9: Mirage Maintenance"""
 def next_element(history: list[int]) -> int:
     """Return the next element in the sequence"""
     diffs_lst = [history]
@@ -13,7 +14,7 @@ def next_element(history: list[int]) -> int:
 
 def main() -> None:
     """Main function"""
-    with open("input.txt") as f:
+    with open("input.txt", "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     histories = [list(map(int, line.split())) for line in lines]

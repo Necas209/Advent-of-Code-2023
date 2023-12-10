@@ -1,8 +1,10 @@
+"""Day 5: If You Give a Seed a Fertilizer"""
 from dataclasses import dataclass
 
 
 @dataclass
 class Map:
+    """Map class"""
     dest_start: int
     src_start: int
     length: int
@@ -10,7 +12,7 @@ class Map:
 
 def main() -> None:
     """Main function"""
-    with open("input.txt", "r") as f:
+    with open("input.txt", "r", encoding="utf-8") as f:
         lines = [line.strip() for line in f.readlines() if line != "\n"]
 
     seed_pairs = list(map(int, lines[0].split(": ")[1].split()))

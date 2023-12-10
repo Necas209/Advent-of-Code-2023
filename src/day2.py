@@ -1,3 +1,4 @@
+"""Day 2: Cube Conundrum"""
 from dataclasses import dataclass
 from typing import Self
 

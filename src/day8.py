@@ -1,3 +1,4 @@
+"""Day 8: Haunted Wasteland"""
 from dataclasses import dataclass
 import math
 

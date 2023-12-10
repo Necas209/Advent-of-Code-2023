@@ -1,3 +1,4 @@
+"""Day 6: Wait For It"""
 from dataclasses import dataclass
 from functools import reduce
 import operator

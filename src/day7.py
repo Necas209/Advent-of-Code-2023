@@ -1,3 +1,4 @@
+"""Day 7: Camel Cards"""
 from collections import Counter
 from dataclasses import dataclass
 from enum import Enum
