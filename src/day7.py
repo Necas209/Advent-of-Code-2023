@@ -8,6 +8,7 @@ from typing import Self
 
 class HandType(Enum):
     """Hand type enum"""
+
     NONE = 0
     HIGH_CARD = 1
     ONE_PAIR = 2
@@ -38,13 +39,17 @@ class HandType(Enum):
             case 1:
                 return HandType.FIVE_OF_A_KIND
             case 2:
-                if any(counter[card] == 4 for card in card_set):
-                    return HandType.FOUR_OF_A_KIND
-                return HandType.FULL_HOUSE
+                return (
+                    HandType.FOUR_OF_A_KIND
+                    if any(counter[card] == 4 for card in card_set)
+                    else HandType.FULL_HOUSE
+                )
             case 3:
-                if any(counter[card] == 3 for card in card_set):
-                    return HandType.THREE_OF_A_KIND
-                return HandType.TWO_PAIR
+                return (
+                    HandType.THREE_OF_A_KIND
+                    if any(counter[card] == 3 for card in card_set)
+                    else HandType.TWO_PAIR
+                )
             case 4:
                 return HandType.ONE_PAIR
             case 5:
@@ -56,6 +61,7 @@ class HandType(Enum):
 @dataclass
 class Hand:
     """Hand class"""
+
     cards: str
     bid: int
     hand_type: HandType = HandType.NONE

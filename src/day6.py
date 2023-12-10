@@ -11,6 +11,7 @@ class Race:
     distance: int
 
     def ways_to_win(self) -> int:
+        """Return number of ways to win"""
         num_ways = 0
         for acc_time in range(1, self.time + 1):
             curr_speed = acc_time
