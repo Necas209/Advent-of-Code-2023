@@ -1,6 +1,6 @@
 # Advent-of-Code-2023
 
-Source code for the 2023 edition of Advent of Code.
+Source code for the [2023 edition of Advent of Code](https://adventofcode.com/2023).
 
 The solutions are written in Python 3.12.0. To run a solution, use the following command:
 
