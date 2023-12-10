@@ -2,7 +2,8 @@ import time
 
 
 def main() -> None:
-    with open("input.txt") as f:
+    """Main function"""
+    with open("input.txt", "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     lines = [line.split(": ")[1] for line in lines]

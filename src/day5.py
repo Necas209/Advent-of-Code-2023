@@ -9,6 +9,7 @@ class Map:
 
 
 def main() -> None:
+    """Main function"""
     with open("input.txt", "r") as f:
         lines = [line.strip() for line in f.readlines() if line != "\n"]
 
@@ -27,9 +28,7 @@ def main() -> None:
         dest_start, src_start, length = list(map(int, line.split()))
         new_map = Map(dest_start, src_start, length)
         maps.append(new_map)
-    else:
-        list_of_maps.append(sorted(maps, key=lambda x: x.src_start))
-
+    list_of_maps.append(sorted(maps, key=lambda x: x.src_start))
     list_of_maps.reverse()
 
     min_location = 0

@@ -3,28 +3,33 @@ from typing import NamedTuple
 
 
 class Point(NamedTuple):
+    """Point class"""
     x: int
     y: int
 
 
 @dataclass
 class Char:
+    """Char class"""
     value: str
     adjacent: int = 0
     ratio: int = 1
 
     @property
     def is_gear(self) -> bool:
+        """Return True if char is gear (asterisk))"""
         return self.adjacent == 2
 
 
 @dataclass
 class Number:
+    """Number class"""
     value: int = -1
     index: Point = Point(-1, -1)
     length: int = 0
 
     def is_part_number(self, lines: list[list[Char]]) -> bool:
+        """Return True if number is a part number"""
         start_x = max(self.index.x - 1, 0)
         end_x = min(self.index.x + self.length, len(lines[0]) - 1)
         start_y = max(self.index.y - 1, 0)
@@ -41,7 +46,8 @@ class Number:
 
 
 def main() -> None:
-    with open("input.txt") as f:
+    """Main function"""
+    with open("input.txt", "r", encoding="utf-8") as f:
         chars = f.readlines()
     chars = [[Char(char) for char in line.strip()] for line in chars]
 

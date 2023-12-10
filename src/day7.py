@@ -2,9 +2,11 @@ from collections import Counter
 from dataclasses import dataclass
 from enum import Enum
 from functools import cmp_to_key
+from typing import Self
 
 
 class HandType(Enum):
+    """Hand type enum"""
     NONE = 0
     HIGH_CARD = 1
     ONE_PAIR = 2
@@ -14,66 +16,67 @@ class HandType(Enum):
     FOUR_OF_A_KIND = 6
     FIVE_OF_A_KIND = 7
 
-
-def from_cards(cards: str) -> HandType:
-    counter = Counter(cards)
-
-    # Special case: J is a Joker, a wilcard that acts like
-    # whatever card would make the hand the strongest type possible
-    if counter["J"] not in [0, 5]:
-        most_common_cards = counter.most_common(2)
-        if most_common_cards[0][0] == "J":
-            most_common_card = most_common_cards[1][0]
-        else:
-            most_common_card = most_common_cards[0][0]
-        cards = cards.replace("J", most_common_card)
+    @classmethod
+    def from_cards(cls, cards: str) -> Self:
+        """Return hand type from cards"""
         counter = Counter(cards)
 
-    card_set = set(cards)
-    match len(card_set):
-        case 1:
-            return HandType.FIVE_OF_A_KIND
-        case 2:
-            if any(counter[card] == 4 for card in card_set):
-                return HandType.FOUR_OF_A_KIND
+        # Special case: J is a Joker, a wilcard that acts like
+        # whatever card would make the hand the strongest type possible
+        if counter["J"] not in [0, 5]:
+            most_common_cards = counter.most_common(2)
+            if most_common_cards[0][0] == "J":
+                most_common_card = most_common_cards[1][0]
             else:
+                most_common_card = most_common_cards[0][0]
+            cards = cards.replace("J", most_common_card)
+            counter = Counter(cards)
+
+        card_set = set(cards)
+        match len(card_set):
+            case 1:
+                return HandType.FIVE_OF_A_KIND
+            case 2:
+                if any(counter[card] == 4 for card in card_set):
+                    return HandType.FOUR_OF_A_KIND
                 return HandType.FULL_HOUSE
-        case 3:
-            if any(counter[card] == 3 for card in card_set):
-                return HandType.THREE_OF_A_KIND
-            else:
+            case 3:
+                if any(counter[card] == 3 for card in card_set):
+                    return HandType.THREE_OF_A_KIND
                 return HandType.TWO_PAIR
-        case 4:
-            return HandType.ONE_PAIR
-        case 5:
-            return HandType.HIGH_CARD
-        case _:
-            return HandType.NONE
+            case 4:
+                return HandType.ONE_PAIR
+            case 5:
+                return HandType.HIGH_CARD
+            case _:
+                return HandType.NONE
 
 
 @dataclass
 class Hand:
+    """Hand class"""
     cards: str
     bid: int
     hand_type: HandType = HandType.NONE
 
     def __post_init__(self) -> None:
-        self.hand_type = from_cards(self.cards)
+        self.hand_type = HandType.from_cards(self.cards)
 
 
 def compare_to(val1: int, val2: int) -> int:
+    """Compare two values"""
     if val1 > val2:
         return 1
-    elif val1 < val2:
+    if val1 < val2:
         return -1
-    else:
-        return 0
+    return 0
 
 
 CARDS_BY_STRENGTH = "AKQT98765432J"[::-1]
 
 
 def compare_hands(hand1: Hand, hand2: Hand) -> int:
+    """Compare two hands"""
     if hand1.hand_type != hand2.hand_type:
         return compare_to(hand1.hand_type.value, hand2.hand_type.value)
 
@@ -89,7 +92,8 @@ def compare_hands(hand1: Hand, hand2: Hand) -> int:
 
 
 def main() -> None:
-    with open("input.txt") as f:
+    """Main function"""
+    with open("input.txt", "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     lines = [line.strip().split() for line in lines]

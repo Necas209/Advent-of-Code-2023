@@ -8,6 +8,7 @@ MAX_BLUE = 14
 
 @dataclass
 class Game:
+    """Game class"""
     id: int = 0
     red: int = 0
     green: int = 0
@@ -15,6 +16,7 @@ class Game:
 
     @classmethod
     def parse_str(cls, s: str) -> Self:
+        """Parse string to Game object"""
         s = s.strip()
         game = cls()
         colon = s.split(": ")
@@ -33,15 +35,18 @@ class Game:
 
     @property
     def cubes_power(self) -> int:
+        """Return cubes power"""
         return self.red * self.green * self.blue
 
     @property
     def is_possible(self) -> bool:
+        """Return True if game is possible"""
         return self.red <= MAX_RED and self.green <= MAX_GREEN and self.blue <= MAX_BLUE
 
 
 def main() -> None:
-    with open("sinput.txt") as f:
+    """Main function"""
+    with open("input.txt", "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     games = [Game.parse_str(line) for line in lines]

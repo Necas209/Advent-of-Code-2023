@@ -1,9 +1,11 @@
+from dataclasses import dataclass
 from functools import reduce
 import operator
-from typing import NamedTuple
 
 
-class Race(NamedTuple):
+@dataclass
+class Race:
+    """Race class"""
     time: int
     distance: int
 
@@ -18,7 +20,8 @@ class Race(NamedTuple):
 
 
 def main() -> None:
-    with open("input.txt") as f:
+    """Main function"""
+    with open("input.txt", "r", encoding="utf-8") as f:
         lines = f.readlines()
 
     times_str = lines[0].split()[1:]

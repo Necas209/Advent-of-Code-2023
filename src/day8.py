@@ -4,12 +4,14 @@ import math
 
 @dataclass
 class Node:
+    """Node class"""
     left: int
     right: int
     is_z: bool = False
 
 
 def get_ascii_value(s: str) -> int:
+    """Return ascii value of string"""
     res = 0
     for char in s:
         res = res * 26 + ord(char) - ord("A")
@@ -17,6 +19,7 @@ def get_ascii_value(s: str) -> int:
 
 
 def no_steps_to_z(node: Node, network: list[Node], instructions: list[int]):
+    """Return number of steps to Z"""
     steps = 0
     while True:
         for instruction in instructions:
@@ -31,7 +34,8 @@ def no_steps_to_z(node: Node, network: list[Node], instructions: list[int]):
 
 
 def main() -> None:
-    with open("input.txt") as f:
+    """Main function"""
+    with open("input.txt", "r", encoding="utf-8") as f:
         lines = list(map(str.strip, f.readlines()))
 
     instructions = [0 if char == "L" else 1 for char in lines[0]]

@@ -1,4 +1,5 @@
 def next_element(history: list[int]) -> int:
+    """Return the next element in the sequence"""
     diffs_lst = [history]
     while True:
         last_diffs = diffs_lst[-1]
@@ -11,6 +12,7 @@ def next_element(history: list[int]) -> int:
 
 
 def main() -> None:
+    """Main function"""
     with open("input.txt") as f:
         lines = f.readlines()
 
