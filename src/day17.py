@@ -8,6 +8,7 @@ Grid = dict[complex, int]
 
 class QueueItem(NamedTuple):
     """Queue Item tuple"""
+
     cost: int
     position: Position
     direction: Position
@@ -56,11 +57,11 @@ def dijkstra(grid: Grid, dest: complex, min_moves: int = 0, max_moves: int = 3) 
 def main() -> None:
     """Main Function"""
     with open("input.txt", "r", encoding="utf-8") as f:
-        lines = f.readlines()
+        lines = f.read()
 
     grid: Grid = {}
     p = complex()
-    for r, line in enumerate(map(str.strip, lines)):
+    for r, line in enumerate(lines.splitlines()):
         for c, char in enumerate(line):
             p = c - r * 1j
             grid[p] = int(char)

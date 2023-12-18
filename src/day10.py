@@ -1,5 +1,4 @@
 """Day 10: Pipe Maze"""
-
 from shapely import Polygon, Point  # type: ignore
 
 
@@ -73,7 +72,7 @@ def main() -> None:
     print("Loop length:", len(path))
     print("Farthest:", len(path) // 2)
 
-    polygon = Polygon(path)
+    polygon = Polygon(path) # type: ignore
     count = sum(
         polygon.contains(Point(x, y))  # type: ignore
         for y, line in enumerate(lines)
