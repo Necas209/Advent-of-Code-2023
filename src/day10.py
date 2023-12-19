@@ -1,5 +1,5 @@
 """Day 10: Pipe Maze"""
-from shapely import Polygon, Point  # type: ignore
+from shapely import Polygon  # type: ignore
 
 
 Position = tuple[int, int]
@@ -58,6 +58,11 @@ def find_start(lines: list[str]) -> Position:
     return x, y
 
 
+def get_count_inside(polygon: Polygon) -> int:
+    """Get count inside"""
+    return int(polygon.area - polygon.length // 2 + 1)
+
+
 def main() -> None:
     "Main function"
     with open("input.txt", "r", encoding="utf-8") as f:
@@ -72,15 +77,8 @@ def main() -> None:
     print("Loop length:", len(path))
     print("Farthest:", len(path) // 2)
 
-    polygon = Polygon(path) # type: ignore
-    count = sum(
-        polygon.contains(Point(x, y))  # type: ignore
-        for y, line in enumerate(lines)
-        for x, _ in enumerate(line)
-        if (x, y) not in path
-    )
-
-    print("Count:", count)
+    polygon = Polygon(path)  # type: ignore
+    print("Count:", get_count_inside(polygon))  # type: ignore
 
 
 if __name__ == "__main__":
