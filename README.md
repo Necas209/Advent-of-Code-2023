@@ -2,7 +2,7 @@
 
 Source code for the [2023 edition of Advent of Code](https://adventofcode.com/2023).
 
-The solutions are written in Python 3.12.0. To run a solution, use the following command:
+The solutions are written in Python 3.12.1. To run a solution, use the following command:
 
 ```bash
 python3 src/dayXX.py
