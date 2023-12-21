@@ -32,6 +32,7 @@ python3 src/dayXX.py
 |  18 |    ⭐    |    ⭐    |
 |  19 |    ⭐    |    ⭐    |
 |  20 |    ⭐    |    ⭐    |
+|  21 |    ⭐    |    ⭐    |
 
 ## License
 
